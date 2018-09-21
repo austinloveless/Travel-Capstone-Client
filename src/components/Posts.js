@@ -5,6 +5,7 @@ import PostDetail from "./PostDetail";
 import { Header } from "./common";
 import NewPostForm from "./NewPostForm";
 import axios from "axios";
+import { Icon } from "react-native-elements";
 
 const APIURL = "https://infinite-mountain-39369.herokuapp.com/api/posts";
 
@@ -17,6 +18,12 @@ class Posts extends Component {
     };
   }
 
+  toggleForm = () => {
+    this.setState({
+      toggleForm: !this.state.toggleForm
+    });
+  };
+
   componentDidMount() {
     console.log("posts mounted");
     return fetch(APIURL)
@@ -25,13 +32,7 @@ class Posts extends Component {
         this.setState({ posts: responseJson });
       });
   }
-
-  toggleHidden = () => {
-    this.setState(prevState => ({
-      toggleForm: !prevState.toggleForm
-    }));
-  };
-
+  //
   addPost = async data => {
     const response = await fetch(APIURL, {
       method: "post",
@@ -49,36 +50,6 @@ class Posts extends Component {
     });
   };
 
-  uploadImageAsync(uri) {
-    let apiUrl =
-      "https://infinite-mountain-39369.herokuapp.com/api/posts/upload";
-
-    let uriParts = uri.split(".");
-    let fileType = uriParts[uriParts.length - 1];
-
-    let formData = new FormData();
-    formData.append("image", {
-      uri,
-      name: `image.${fileType}`,
-      type: `image/${fileType}`
-    });
-
-    let options = {
-      method: "POST",
-      body: formData,
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "multipart/form-data"
-      }
-    };
-
-    return fetch(apiUrl, options).then(res => res.json());
-  }
-
-  savePost = (image, post) => {
-    return Promise.all([this.addPost(post), this.uploadImageAsync(image)]);
-  };
-
   render() {
     const posts = this.state.posts
       ? this.state.posts.map(p => {
@@ -88,11 +59,9 @@ class Posts extends Component {
 
     return (
       <ScrollView>
-        <Header headerText="Travelgram" />
-        <Button title="Make New Post" onPress={this.toggleForm} />
-        {!this.state.toggleForm ? (
-          <NewPostForm savePost={this.savePost} />
-        ) : null}
+        <Header headerText="Travelgram" toggleForm={this.toggleForm} />
+        <Icon name="plus" type="font-awesome" onPress={this.toggleForm} />
+        {!this.state.toggleForm ? <NewPostForm addPost={this.addPost} /> : null}
         {posts}
       </ScrollView>
     );
