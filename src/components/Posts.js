@@ -51,6 +51,32 @@ class Posts extends Component {
     });
   };
 
+  uploadImageAsync(uri) {
+    let apiUrl =
+      "https://infinite-mountain-39369.herokuapp.com/api/posts/upload";
+
+    let uriParts = uri.split(".");
+    let fileType = uriParts[uriParts.length - 1];
+
+    let formData = new FormData();
+    formData.append("image", {
+      uri,
+      name: `image.${fileType}`,
+      type: `image/${fileType}`
+    });
+
+    let options = {
+      method: "POST",
+      body: formData,
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "multipart/form-data"
+      }
+    };
+
+    return fetch(apiUrl, options).then(res => res.json());
+  }
+
   // addPost = async ({ title, desc, image }) => {
   //   let location = "";
   //   console.log("image", image);
@@ -71,30 +97,35 @@ class Posts extends Component {
   //   });
   // };
   //
-  addImage = uri => {
-    const formData = new FormData();
-    formData.append("image", { uri: file, name: new Date().getTime() });
-    const fileName = Date.now();
-    options.keyPrefix = `files/${Date.now()}_${fileName}`;
-    const file = {
-      uri,
-      name: fileName,
-      type: "image/jpg"
-    };
-    console.log("file to upload", file);
-    return RNS3.put(file, options)
-      .then(response => {
-        if (response.status !== 201)
-          throw new Error("Failed to upload image to S3");
-        console.log(response.body);
-        return response.body;
-      })
-      .catch(err => {
-        console.error(err);
-        return "";
-      });
+
+  savePost = (image, post) => {
+    return Promise.all([this.addPost(post), this.uploadImageAsync(image)]);
   };
-  //   /*
+
+  // addImage = uri => {
+  //   const formData = new FormData();
+  //   formData.append("image", { uri: file, name: new Date().getTime() });
+  //   const fileName = Date.now();
+  //   options.keyPrefix = `files/${Date.now()}_${fileName}`;
+  //   const file = {
+  //     uri,
+  //     name: fileName,
+  //     type: "image/jpg"
+  //   };
+  //   console.log("file to upload", file);
+  //   return RNS3.put(file, options)
+  //     .then(response => {
+  //       if (response.status !== 201)
+  //         throw new Error("Failed to upload image to S3");
+  //       console.log(response.body);
+  //       return response.body;
+  //     })
+  //     .catch(err => {
+  //       console.error(err);
+  //       return "";
+  //     });
+  // };
+  // //   /*
   //   return fetch(APIURL + "/upload", {
   //     method: "post",
   //     body: formData
@@ -165,7 +196,7 @@ class Posts extends Component {
     return (
       <ScrollView>
         <Header headerText="Travelgram" />
-        <NewPostForm addPost={this.addPost} />
+        <NewPostForm savePost={this.savePost} />
         {posts}
       </ScrollView>
     );
