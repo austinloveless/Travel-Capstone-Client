@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, View, Image, Linking } from "react-native";
-import { Button, Card, CardSection } from "./common";
+import { CommonButton, Card, CardSection } from "./common";
+import moment from "moment";
 
 const AlbumDetail = ({ title, desc, createdAt, image, liked }) => {
   const {
@@ -19,10 +20,13 @@ const AlbumDetail = ({ title, desc, createdAt, image, liked }) => {
       </CardSection>
 
       <CardSection>
-        <Image style={imageStyle} source={{ url: image }} />
+        <Image style={imageStyle} source={{ uri: image }} />
       </CardSection>
       <CardSection>
         <Text>{desc}</Text>
+        <View>
+          <Text>{moment(createdAt).fromNow()}</Text>
+        </View>
       </CardSection>
     </Card>
   );

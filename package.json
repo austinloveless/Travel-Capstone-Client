@@ -9,9 +9,18 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "expo": "^30.0.1",
-    "react": "16.3.1",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz"
-  },
-  "proxy": "http://localhost:8000"
+    "firebase": "^5.5.0",
+    "moment": "^2.22.2",
+    "react": "^16.0.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz",
+    "react-native-aws3": "0.0.8",
+    "react-native-elements": "^0.19.1",
+    "react-native-file-type": "0.0.8",
+    "react-native-fs": "^2.11.15",
+    "react-native-image-crop-picker": "^0.21.2",
+    "react-native-image-picker": "^0.26.10",
+    "react-navigation": "^2.14.2"
+  }
 }
