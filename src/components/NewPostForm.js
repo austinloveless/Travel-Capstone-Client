@@ -7,10 +7,11 @@ import { Header } from "./common";
 //import ImagePicker from 'react-native-image-crop-picker'
 
 class NewPostForm extends Component {
-  state = { title: "", image: "", desc: "" };
+  state = { title: "", image: "", desc: "", error: "" };
 
   onSubmit = e => {
     const { title, image, desc } = this.state;
+    this.setState({ error: null });
 
     const postData = {
       title,
@@ -19,8 +20,9 @@ class NewPostForm extends Component {
     };
     console.log("post Data", postData);
     e.preventDefault();
-    this.props.addPost(postData).catch(err => {
+    this.props.savePost(image, postData).catch(err => {
       console.log("post error", err);
+      this.setState({ error: err.message });
     });
   };
   //
@@ -60,6 +62,8 @@ class NewPostForm extends Component {
     console.log("state", JSON.stringify(this.state));
     return (
       <View>
+        <Header headerText="Travelgram" />
+
         <View style={{ marginBottom: 10 }}>
           <FormLabel>Title</FormLabel>
           <FormInput
@@ -67,7 +71,7 @@ class NewPostForm extends Component {
             onChangeText={title => this.onInputChange(title, "title")}
           />
         </View>
-        {/* <View style={{ marginBottom: 10 }}>
+        <View style={{ marginBottom: 10 }}>
           <FormLabel>Travel Photo</FormLabel>
           {this.state.image && (
             <Image
@@ -77,7 +81,7 @@ class NewPostForm extends Component {
             />
           )}
           <Button onPress={this.openPicker} title="Upload image" />
-        </View> */}
+        </View>
         <View style={{ marginBottom: 10 }}>
           <FormLabel>Describe The Trip!</FormLabel>
           <FormInput

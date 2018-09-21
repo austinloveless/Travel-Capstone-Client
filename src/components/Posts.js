@@ -4,7 +4,7 @@ import { Spinner, Card, CardSection, Button } from "./common";
 import PostDetail from "./PostDetail";
 import { Header } from "./common";
 import NewPostForm from "./NewPostForm";
-import axios from "axios";
+
 import { Icon } from "react-native-elements";
 
 const APIURL = "https://infinite-mountain-39369.herokuapp.com/api/posts";
@@ -50,6 +50,36 @@ class Posts extends Component {
     });
   };
 
+  uploadImageAsync(uri) {
+    let apiUrl =
+      "https://infinite-mountain-39369.herokuapp.com/api/posts/upload";
+
+    let uriParts = uri.split(".");
+    let fileType = uriParts[uriParts.length - 1];
+
+    let formData = new FormData();
+    formData.append("image", {
+      uri,
+      name: `image.${fileType}`,
+      type: `image/${fileType}`
+    });
+
+    let options = {
+      method: "POST",
+      body: formData,
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "multipart/form-data"
+      }
+    };
+
+    return fetch(apiUrl, options).then(res => res.json());
+  }
+
+  savePost = (image, post) => {
+    return Promise.all([this.addPost(post), this.uploadImageAsync(image)]);
+  };
+
   render() {
     const posts = this.state.posts
       ? this.state.posts.map(p => {
@@ -59,9 +89,11 @@ class Posts extends Component {
 
     return (
       <ScrollView>
-        <Header headerText="Travelgram" toggleForm={this.toggleForm} />
+        <Header headerText="Travelgram" />
         <Icon name="plus" type="font-awesome" onPress={this.toggleForm} />
-        {!this.state.toggleForm ? <NewPostForm addPost={this.addPost} /> : null}
+        {!this.state.toggleForm ? (
+          <NewPostForm savePost={this.savePost} />
+        ) : null}
         {posts}
       </ScrollView>
     );
