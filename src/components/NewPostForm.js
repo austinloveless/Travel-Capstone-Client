@@ -11,7 +11,7 @@ class NewPostForm extends Component {
 
   onSubmit = e => {
     const { title, image, desc } = this.state;
-    this.setState({ error: null });
+    this.setState({ error: null, title: "", image: "", desc: "", error: "" });
 
     const postData = {
       title,
@@ -54,16 +54,11 @@ class NewPostForm extends Component {
     } else {
       console.log("Status not granted");
     }
-
-    //ImagePicker.openPicker()
   };
 
   render() {
-    console.log("state", JSON.stringify(this.state));
     return (
       <View>
-        <Header headerText="Travelgram" />
-
         <View style={{ marginBottom: 10 }}>
           <FormLabel>Title</FormLabel>
           <FormInput

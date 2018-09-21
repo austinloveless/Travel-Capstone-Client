@@ -12,7 +12,7 @@ import {
 //Screens
 import AuthScreen from "./src/screens/AuthScreen";
 import WelcomeScreen from "./src/screens/WelcomeScreen";
-import UploadScreen from "./src/screens/UploadScreen";
+// import UploadScreen from "./src/screens/UploadScreen";
 import SettingScreen from "./src/screens/SettingScreen";
 import MapScreen from "./src/screens/MapScreen";
 import PostsScreen from "./src/screens/PostsScreen";
@@ -43,7 +43,7 @@ export default class App extends React.Component {
           posts: { screen: PostsScreen },
           upload: {
             screen: createStackNavigator({
-              upload: { screen: UploadScreen },
+              // upload: { screen: UploadScreen },
               settings: { screen: SettingScreen }
             })
           }
