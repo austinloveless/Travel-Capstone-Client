@@ -41,7 +41,7 @@ class Posts extends Component {
         "Content-Type": "application/json",
         Accept: "application/json"
       }),
-      body: JSON.stringify({ posts: data })
+      body: JSON.stringify(data)
     });
     const posts = await response.json();
 
