@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { View, Text } from "react-native";
+import { View, Text, AsyncStorage } from "react-native";
 import SignUpForm from "../components/SignUpForm";
 
 class AuthScreen extends Component {
   onSignUpComplete = () => {
     this.props.navigation.navigate("code");
   };
+  componentDidMount() {}
 
   render() {
     return (

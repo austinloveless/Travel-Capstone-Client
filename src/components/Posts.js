@@ -4,7 +4,6 @@ import { Spinner, Card, CardSection, Button } from "./common";
 import PostDetail from "./PostDetail";
 import { Header } from "./common";
 import NewPostForm from "./NewPostForm";
-
 import { Icon } from "react-native-elements";
 
 const APIURL = "https://infinite-mountain-39369.herokuapp.com/api/posts";

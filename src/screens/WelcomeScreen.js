@@ -1,6 +1,8 @@
+import _ from "lodash";
 import React, { Component } from "react";
-import { View, Text } from "react-native";
+import { View, Text, AsyncStorage } from "react-native";
 import { FormLabel, FormInput, Button } from "react-native-elements";
+import { Apploading } from "expo";
 import NavSlides from "../components/NavSlides";
 
 const SLIDE_DATA = [
@@ -10,11 +12,27 @@ const SLIDE_DATA = [
 ];
 
 class WelcomeScreen extends Component {
+  state = { token: null };
+
+  async componentWillMount() {
+    let token = await AsyncStorage.getItem("token");
+
+    if (token) {
+      this.props.navigation.navigate("posts");
+      this.setState({ token });
+    } else {
+      this.setState({ token: false });
+    }
+  }
+
   onSlidesComplete = () => {
     this.props.navigation.navigate("auth");
   };
 
   render() {
+    // if (_.isNull(this.state.token)) {
+    //   return <Apploading />;
+    // }
     return <NavSlides data={SLIDE_DATA} onComplete={this.onSlidesComplete} />;
   }
 }

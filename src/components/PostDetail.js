@@ -52,7 +52,7 @@ const styles = {
     marginRight: 10
   },
   imageStyle: {
-    height: 300,
+    height: 450,
     flex: 1,
     width: null
   }

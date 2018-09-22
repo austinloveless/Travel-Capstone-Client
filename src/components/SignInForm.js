@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text } from "react-native";
+import { View, Text, AsyncStorage } from "react-native";
 import { FormLabel, FormInput, Button } from "react-native-elements";
 import axios from "axios";
 import firebase from "firebase";
@@ -8,7 +8,7 @@ import { Header, CommonButton } from "./common";
 const ROOT_URL = "https://us-central1-travel-capstone-auth.cloudfunctions.net";
 
 class SignInForm extends Component {
-  state = { phone: "1", code: "", user: false };
+  state = { phone: "1", code: "", token: "" };
 
   handleSubmit = async ({ navigation }) => {
     try {
@@ -16,8 +16,8 @@ class SignInForm extends Component {
         phone: this.state.phone,
         code: this.state.code
       });
-      console.log("token", data.token);
-      this.setState({ user: true });
+      AsyncStorage.setItem("JWT", data.token);
+      this.setState({ token: data.token });
       firebase.auth().signInWithCustomToken(data.token);
       this.props.onComplete;
     } catch (err) {
@@ -25,12 +25,19 @@ class SignInForm extends Component {
     }
   };
 
+  onLogin = async () => {
+    let token = await AsyncStorage.getItem("token");
+    console.log("storage token", token);
+  };
+
   render() {
+    console.log("state token", this.state.token);
+
     return (
       <View>
         <Header headerText="Travelgram" />
         <View style={{ marginBottom: 10 }}>
-          <FormLabel>Enter Phone Number</FormLabel>
+          <FormLabel>Enter Phone Number Again</FormLabel>
           <FormInput
             value={this.state.phone}
             onChangeText={phone => this.setState({ phone })}
@@ -55,6 +62,7 @@ class SignInForm extends Component {
           title="Create User Name"
           onPress={this.props.onComplete}
         />
+        <Button title="test" onPress={this.onLogin} />
       </View>
     );
   }

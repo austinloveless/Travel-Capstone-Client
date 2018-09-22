@@ -54,16 +54,11 @@ class NewPostForm extends Component {
     } else {
       console.log("Status not granted");
     }
-
-    //ImagePicker.openPicker()
   };
 
   render() {
-    console.log("state", JSON.stringify(this.state));
     return (
       <View>
-        <Header headerText="Travelgram" />
-
         <View style={{ marginBottom: 10 }}>
           <FormLabel>Title</FormLabel>
           <FormInput
@@ -75,8 +70,8 @@ class NewPostForm extends Component {
           <FormLabel>Travel Photo</FormLabel>
           {this.state.image && (
             <Image
-              width={300}
-              height={300}
+              width={400}
+              height={400}
               source={{ uri: this.state.image }}
             />
           )}

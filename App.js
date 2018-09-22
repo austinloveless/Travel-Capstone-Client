@@ -12,7 +12,6 @@ import {
 //Screens
 import AuthScreen from "./src/screens/AuthScreen";
 import WelcomeScreen from "./src/screens/WelcomeScreen";
-import UploadScreen from "./src/screens/UploadScreen";
 import SettingScreen from "./src/screens/SettingScreen";
 import MapScreen from "./src/screens/MapScreen";
 import PostsScreen from "./src/screens/PostsScreen";
@@ -32,24 +31,39 @@ export default class App extends React.Component {
     firebase.initializeApp(config);
   }
   render() {
-    const MainNavigator = createBottomTabNavigator({
-      welcome: { screen: WelcomeScreen },
-      auth: { screen: AuthScreen },
-      code: { screen: CodeScreen },
-      username: { screen: UserNameScreen },
-      main: {
-        screen: createBottomTabNavigator({
-          map: { screen: MapScreen },
-          posts: { screen: PostsScreen },
-          upload: {
-            screen: createStackNavigator({
-              upload: { screen: UploadScreen },
-              settings: { screen: SettingScreen }
-            })
-          }
-        })
+    const MainNavigator = createBottomTabNavigator(
+      {
+        welcome: { screen: WelcomeScreen },
+        auth: { screen: AuthScreen },
+        code: { screen: CodeScreen },
+        username: { screen: UserNameScreen },
+        main: {
+          screen: createBottomTabNavigator(
+            {
+              map: { screen: MapScreen },
+              posts: { screen: PostsScreen },
+              settings: {
+                screen: createStackNavigator({
+                  settings: { screen: SettingScreen }
+                })
+              }
+            },
+            {
+              tabBarPosition: "bottom",
+              tabBarOptions: {
+                labelStyle: { fontSize: 12 }
+              }
+            }
+          )
+        }
+      },
+      {
+        navigationOptions: {
+          tabBarVisible: false
+        },
+        lazyLoad: true
       }
-    });
+    );
 
     return (
       <View style={styles.container}>
