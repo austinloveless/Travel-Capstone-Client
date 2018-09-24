@@ -1,36 +1,71 @@
-import React from "react";
-import { Text, View, Image, Linking } from "react-native";
+import React, { Component } from "react";
+import { Text, View, Image, Linking, AsyncStorage } from "react-native";
 import { CommonButton, Card, CardSection } from "./common";
+import { Button } from "react-native-elements";
 import moment from "moment";
+import UserInfo from "./UserInfo";
 
-const AlbumDetail = ({ title, desc, createdAt, image, liked }) => {
-  const {
-    headerContentStyle,
-    thumbnailStyle,
-    imageContainerStyle,
-    headerTextStyle,
-    imageStyle
-  } = styles;
-  return (
-    <Card>
-      <CardSection>
-        <View style={headerContentStyle}>
-          <Text style={headerTextStyle}>{title}</Text>
-        </View>
-      </CardSection>
+class PostDetail extends Component {
+  state = { userInfo: [] };
 
-      <CardSection>
-        <Image style={imageStyle} source={{ uri: image }} />
-      </CardSection>
-      <CardSection>
-        <Text>{desc}</Text>
-        <View>
-          <Text>{moment(createdAt).fromNow()}</Text>
-        </View>
-      </CardSection>
-    </Card>
-  );
-};
+  componentDidMount() {
+    console.log("posts mounted");
+    return fetch("https://infinite-mountain-39369.herokuapp.com/api/users")
+      .then(response => response.json())
+      .then(responseJson => {
+        this.setState({ userInfo: responseJson });
+      });
+  }
+
+  render() {
+    const {
+      headerContentStyle,
+      thumbnailStyle,
+      imageContainerStyle,
+      headerTextStyle,
+      imageStyle,
+      timeText,
+      descText,
+      profileImageStyle
+    } = styles;
+
+    const user = this.state.userInfo
+      ? this.state.userInfo.map(user => {
+          return <UserInfo key={user._id} {...user} />;
+        })
+      : null;
+
+    return (
+      <Card style={{ paddingTop: 5 }}>
+        <CardSection>
+          <View>
+            <Image
+              style={profileImageStyle}
+              source={{
+                uri:
+                  "https://s3.us-east-2.amazonaws.com/capstone-travel-profile/files/IMG_1011.JPG"
+              }}
+            />
+            <Text style={headerTextStyle}>{this.props.title}</Text>
+          </View>
+        </CardSection>
+
+        <Image style={imageStyle} source={{ uri: this.props.image }} />
+        <CardSection>
+          <Text style={headerTextStyle}>{this.props.title}</Text>
+          <View>
+            <Text style={descText}>{this.props.desc}</Text>
+          </View>
+          <View>
+            <Text style={timeText}>
+              {moment(this.props.createdAt).fromNow()}
+            </Text>
+          </View>
+        </CardSection>
+      </Card>
+    );
+  }
+}
 
 const styles = {
   headerContentStyle: {
@@ -38,24 +73,37 @@ const styles = {
     justifyContent: "space-around"
   },
   headerTextStyle: {
-    fontSize: 18
+    fontSize: 18,
+    fontWeight: "bold"
   },
   thumbnailStyle: {
-    height: 50,
-    width: 50,
+    height: 80,
+    width: 80,
     borderRadius: 2
   },
   imageContainerStyle: {
     justifyContent: "center",
     alignItems: "center",
-    marginLeft: 10,
-    marginRight: 10
+    marginLeft: 0,
+    marginRight: 0
   },
   imageStyle: {
     height: 450,
     flex: 1,
     width: null
+  },
+  profileImageStyle: {
+    height: 50,
+    flex: 1,
+    width: null,
+    borderRadius: 27
+  },
+  timeText: {
+    marginLeft: 38
+  },
+  descText: {
+    marginLeft: 20
   }
 };
 
-export default AlbumDetail;
+export default PostDetail;

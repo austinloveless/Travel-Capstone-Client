@@ -16,18 +16,25 @@ class SignInForm extends Component {
         phone: this.state.phone,
         code: this.state.code
       });
-      AsyncStorage.setItem("JWT", data.token);
       this.setState({ token: data.token });
+      AsyncStorage.setItem("JWT", data.token);
       firebase.auth().signInWithCustomToken(data.token);
       this.props.onComplete;
     } catch (err) {
       console.log(err);
     }
   };
-
-  onLogin = async () => {
-    let token = await AsyncStorage.getItem("token");
-    console.log("storage token", token);
+  retrieveData = async () => {
+    try {
+      const value = await AsyncStorage.getItem("JWT");
+      if (value !== null) {
+        // We have data!!
+        console.log("token", value);
+      }
+    } catch (error) {
+      console.log(error);
+      // Error retrieving data
+    }
   };
 
   render() {
@@ -37,7 +44,7 @@ class SignInForm extends Component {
       <View>
         <Header headerText="Travelgram" />
         <View style={{ marginBottom: 10 }}>
-          <FormLabel>Enter Phone Number Again</FormLabel>
+          <FormLabel>Re-enter Phone Number </FormLabel>
           <FormInput
             value={this.state.phone}
             onChangeText={phone => this.setState({ phone })}
@@ -62,7 +69,6 @@ class SignInForm extends Component {
           title="Create User Name"
           onPress={this.props.onComplete}
         />
-        <Button title="test" onPress={this.onLogin} />
       </View>
     );
   }

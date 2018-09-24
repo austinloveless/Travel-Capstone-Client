@@ -23,6 +23,7 @@ class SignUpForm extends Component {
   };
 
   render() {
+    console.log("phone", this.state.phone);
     return (
       <View>
         <Header headerText="Travelgram" />

@@ -3,15 +3,14 @@ import { View, Text, AsyncStorage } from "react-native";
 import SignUpForm from "../components/SignUpForm";
 
 class AuthScreen extends Component {
-  onSignUpComplete = () => {
+  SignUpComplete = () => {
     this.props.navigation.navigate("code");
   };
-  componentDidMount() {}
 
   render() {
     return (
       <View>
-        <SignUpForm onComplete={this.onSignUpComplete} />
+        <SignUpForm onComplete={this.SignUpComplete} />
       </View>
     );
   }

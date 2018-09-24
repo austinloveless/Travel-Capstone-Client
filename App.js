@@ -9,6 +9,7 @@ import {
   createBottomTabNavigator,
   createStackNavigator
 } from "react-navigation";
+
 //Screens
 import AuthScreen from "./src/screens/AuthScreen";
 import WelcomeScreen from "./src/screens/WelcomeScreen";
@@ -19,6 +20,8 @@ import CodeScreen from "./src/screens/CodeScreen";
 import UserNameScreen from "./src/screens/UserNameScreen";
 
 export default class App extends React.Component {
+  state = { username: "" };
+
   componentDidMount() {
     const config = {
       apiKey: "AIzaSyBiNDVyuwmlix6mqDWdHZJHe0pxFDSfQUQ",
@@ -30,6 +33,7 @@ export default class App extends React.Component {
     };
     firebase.initializeApp(config);
   }
+
   render() {
     const MainNavigator = createBottomTabNavigator(
       {
@@ -56,13 +60,13 @@ export default class App extends React.Component {
             }
           )
         }
-      },
-      {
-        navigationOptions: {
-          tabBarVisible: false
-        },
-        lazyLoad: true
       }
+      // {
+      //   navigationOptions: {
+      //     tabBarVisible: false
+      //   },
+      //   lazyLoad: true
+      // }
     );
 
     return (

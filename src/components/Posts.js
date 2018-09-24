@@ -1,25 +1,34 @@
 import React, { Component } from "react";
-import { ScrollView } from "react-native";
-import { Spinner, Card, CardSection, Button } from "./common";
+import { ScrollView, TouchableOpacity } from "react-native";
+import { Spinner, Card, CardSection } from "./common";
+import { Button } from "react-native-elements";
 import PostDetail from "./PostDetail";
 import { Header } from "./common";
 import NewPostForm from "./NewPostForm";
 import { Icon } from "react-native-elements";
 
 const APIURL = "https://infinite-mountain-39369.herokuapp.com/api/posts";
+const USERAPI = "https://infinite-mountain-39369.herokuapp.com/api/users";
 
 class Posts extends Component {
   constructor(props) {
     super(props);
     this.state = {
       posts: [],
-      toggleForm: true
+      toggleForm: true,
+      username: "",
+      hideComponent: true
     };
   }
 
   toggleForm = () => {
     this.setState({
       toggleForm: !this.state.toggleForm
+    });
+  };
+  hideComponent = () => {
+    this.setState({
+      hideComponent: !this.state.hideComponent
     });
   };
 
@@ -46,6 +55,22 @@ class Posts extends Component {
     console.log("profile received", posts);
     this.setState({
       posts: [posts, ...this.state.posts]
+    });
+  };
+  addUsername = async data => {
+    const response = await fetch(USERAPI, {
+      method: "post",
+      headers: new Headers({
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      }),
+      body: JSON.stringify(data)
+    });
+    const username = await response.json();
+
+    console.log("username received", username);
+    this.setState({
+      username: [username, ...this.state.username]
     });
   };
 
@@ -89,7 +114,11 @@ class Posts extends Component {
     return (
       <ScrollView>
         <Header headerText="Travelgram" />
-        <Icon name="plus" type="font-awesome" onPress={this.toggleForm} />
+        <Button
+          buttonStyle={styles.buttonStyle}
+          title="New Post "
+          onPress={this.toggleForm}
+        />
         {!this.state.toggleForm ? (
           <NewPostForm savePost={this.savePost} />
         ) : null}
@@ -98,5 +127,10 @@ class Posts extends Component {
     );
   }
 }
+const styles = {
+  buttonStyle: {
+    backgroundColor: "blue"
+  }
+};
 
 export default Posts;

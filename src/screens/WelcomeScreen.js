@@ -15,7 +15,7 @@ class WelcomeScreen extends Component {
   state = { token: null };
 
   async componentWillMount() {
-    let token = await AsyncStorage.getItem("token");
+    let token = await AsyncStorage.getItem("JWT");
 
     if (token) {
       this.props.navigation.navigate("posts");
@@ -30,6 +30,7 @@ class WelcomeScreen extends Component {
   };
 
   render() {
+    console.log("welcome state", this.state.token);
     // if (_.isNull(this.state.token)) {
     //   return <Apploading />;
     // }

@@ -7,16 +7,17 @@ import { Header } from "./common";
 //import ImagePicker from 'react-native-image-crop-picker'
 
 class NewPostForm extends Component {
-  state = { title: "", image: "", desc: "", error: "" };
+  state = { title: "", image: "", desc: "", error: "", username: "" };
 
   onSubmit = e => {
-    const { title, image, desc } = this.state;
+    const { title, image, desc, username } = this.state;
     this.setState({ error: null });
 
     const postData = {
       title,
       image,
-      desc
+      desc,
+      username
     };
     console.log("post Data", postData);
     e.preventDefault();
@@ -60,7 +61,7 @@ class NewPostForm extends Component {
     return (
       <View>
         <View style={{ marginBottom: 10 }}>
-          <FormLabel>Title</FormLabel>
+          <FormLabel>Username</FormLabel>
           <FormInput
             value={this.state.title}
             onChangeText={title => this.onInputChange(title, "title")}
@@ -75,7 +76,11 @@ class NewPostForm extends Component {
               source={{ uri: this.state.image }}
             />
           )}
-          <Button onPress={this.openPicker} title="Upload image" />
+          <Button
+            onPress={this.openPicker}
+            buttonStyle={styles.buttonStyle2}
+            title="Upload image"
+          />
         </View>
         <View style={{ marginBottom: 10 }}>
           <FormLabel>Describe The Trip!</FormLabel>
@@ -96,6 +101,10 @@ class NewPostForm extends Component {
 const styles = {
   buttonStyle: {
     backgroundColor: "#0288D1",
+    marginTop: 15
+  },
+  buttonStyle2: {
+    backgroundColor: "red",
     marginTop: 15
   }
 };

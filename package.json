@@ -23,6 +23,9 @@
     "react-native-fs": "^2.11.15",
     "react-native-image-crop-picker": "^0.21.2",
     "react-native-image-picker": "^0.26.10",
-    "react-navigation": "^2.14.2"
+    "react-navigation": "^2.14.2",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.0",
+    "redux-thunk": "^2.3.0"
   }
 }
