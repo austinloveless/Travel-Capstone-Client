@@ -9,16 +9,15 @@ const ROOT_URL = "https://us-central1-travel-capstone-auth.cloudfunctions.net";
 class SignUpForm extends Component {
   state = { phone: "1", error: "", success: "" };
 
-  handleSubmit = async () => {
+  handleSubmit = async ({ navigation }) => {
     try {
       await axios.post(`${ROOT_URL}/createUser`, { phone: this.state.phone });
       await axios.post(`${ROOT_URL}/requestOneTimePassword`, {
         phone: this.state.phone
       });
+      this.props.onComplete();
     } catch (err) {
       this.setState({ error: err });
-    } finally {
-      this.setState({ success: "Account Created" });
     }
   };
 
@@ -38,12 +37,7 @@ class SignUpForm extends Component {
         <Button
           buttonStyle={styles.buttonStyle}
           onPress={this.handleSubmit}
-          title="Submit"
-        />
-        <Button
-          buttonStyle={styles.buttonStyle}
-          title="Next"
-          onPress={this.props.onComplete}
+          title="Create Account"
         />
       </View>
     );

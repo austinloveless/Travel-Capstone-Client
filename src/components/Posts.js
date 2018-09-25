@@ -7,7 +7,7 @@ import { Header } from "./common";
 import NewPostForm from "./NewPostForm";
 import { Icon } from "react-native-elements";
 
-const APIURL = "https://infinite-mountain-39369.herokuapp.com/api/posts";
+const APIURL = "https://infinite-mountain-39369.herokuapp.com/api/posts/";
 const USERAPI = "https://infinite-mountain-39369.herokuapp.com/api/users";
 
 class Posts extends Component {
@@ -104,10 +104,44 @@ class Posts extends Component {
     return Promise.all([this.addPost(post), this.uploadImageAsync(image)]);
   };
 
+  deletePost(id) {
+    const deleteURL = APIURL + id;
+    fetch(deleteURL, {
+      method: "delete"
+    })
+      .then(resp => {
+        console.log("resp", resp);
+        if (!resp.ok) {
+          if (resp.status >= 400 && resp.status < 500) {
+            return resp.json().then(data => {
+              let err = { errorMessage: data.message };
+              throw err;
+            });
+          } else {
+            let err = {
+              errorMessage: "Please try again later, server is not responding"
+            };
+            throw err;
+          }
+        }
+      })
+      .then(() => {
+        const posts = this.state.posts.filter(post => post._id !== id);
+        console.log("posts", posts);
+        this.setState({ posts: posts });
+      });
+  }
+
   render() {
     const posts = this.state.posts
       ? this.state.posts.map(p => {
-          return <PostDetail key={p._id} {...p} />;
+          return (
+            <PostDetail
+              key={p._id}
+              {...p}
+              onDelete={this.deletePost.bind(this, p._id)}
+            />
+          );
         })
       : "Loading Posts";
 
@@ -120,8 +154,12 @@ class Posts extends Component {
           onPress={this.toggleForm}
         />
         {!this.state.toggleForm ? (
-          <NewPostForm savePost={this.savePost} />
+          <NewPostForm
+            openCamera={this.props.openCamera}
+            savePost={this.savePost}
+          />
         ) : null}
+
         {posts}
       </ScrollView>
     );

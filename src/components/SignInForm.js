@@ -16,10 +16,10 @@ class SignInForm extends Component {
         phone: this.state.phone,
         code: this.state.code
       });
+      this.props.onComplete();
       this.setState({ token: data.token });
       AsyncStorage.setItem("JWT", data.token);
       firebase.auth().signInWithCustomToken(data.token);
-      this.props.onComplete;
     } catch (err) {
       console.log(err);
     }
@@ -62,12 +62,7 @@ class SignInForm extends Component {
         <Button
           buttonStyle={styles.buttonStyle}
           onPress={this.handleSubmit}
-          title="Submit"
-        />
-        <Button
-          buttonStyle={styles.buttonStyle}
-          title="Create User Name"
-          onPress={this.props.onComplete}
+          title="Verify Account"
         />
       </View>
     );

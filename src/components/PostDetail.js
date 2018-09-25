@@ -4,11 +4,12 @@ import { CommonButton, Card, CardSection } from "./common";
 import { Button } from "react-native-elements";
 import moment from "moment";
 import UserInfo from "./UserInfo";
+import EditPost from "./EditPost";
 
 class PostDetail extends Component {
-  state = { userInfo: [] };
+  state = { userInfo: [], toggleForm: true };
 
-  componentDidMount() {
+  componentWillMount() {
     console.log("posts mounted");
     return fetch("https://infinite-mountain-39369.herokuapp.com/api/users")
       .then(response => response.json())
@@ -48,6 +49,9 @@ class PostDetail extends Component {
             />
             <Text style={headerTextStyle}>{this.props.title}</Text>
           </View>
+          <Button title="delete" onPress={this.props.onDelete} />
+          <Button title="edit" onPress={this.toggleForm} />
+          {!this.state.toggleForm ? <EditPost /> : null}
         </CardSection>
 
         <Image style={imageStyle} source={{ uri: this.props.image }} />

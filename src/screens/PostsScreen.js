@@ -4,10 +4,14 @@ import Posts from "../components/Posts";
 import { Icon } from "react-native-elements";
 
 class PostsScreen extends Component {
+  onSignInComplete = () => {
+    this.props.navigation.navigate("camera");
+  };
+
   render() {
     return (
       <View>
-        <Posts />
+        <Posts openCamera={this.onSignInComplete} />
       </View>
     );
   }

@@ -8,7 +8,6 @@ class SettingsScreen extends Component {
     try {
       const token = await AsyncStorage.getItem("JWT");
       const username = await AsyncStorage.getItem("username");
-
       // We have data!!
       console.log("username", username);
       console.log("token", token);

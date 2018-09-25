@@ -5,6 +5,9 @@ import Posts from "./src/components/Posts";
 import SignUpForm from "./src/components/SignUpForm";
 import SignInForm from "./src/components/SignInForm";
 import firebase from "firebase";
+import EditPost from "./src/components/EditPost";
+import { Router, Scene, Stack } from "react-native-router-flux";
+
 import {
   createBottomTabNavigator,
   createStackNavigator
@@ -17,7 +20,7 @@ import SettingScreen from "./src/screens/SettingScreen";
 import MapScreen from "./src/screens/MapScreen";
 import PostsScreen from "./src/screens/PostsScreen";
 import CodeScreen from "./src/screens/CodeScreen";
-import UserNameScreen from "./src/screens/UserNameScreen";
+import CameraScreen from "./src/screens/CameraScreen";
 
 export default class App extends React.Component {
   state = { username: "" };
@@ -40,7 +43,7 @@ export default class App extends React.Component {
         welcome: { screen: WelcomeScreen },
         auth: { screen: AuthScreen },
         code: { screen: CodeScreen },
-        username: { screen: UserNameScreen },
+        camera: { screen: CameraScreen },
         main: {
           screen: createBottomTabNavigator(
             {

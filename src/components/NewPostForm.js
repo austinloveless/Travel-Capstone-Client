@@ -1,13 +1,32 @@
 import React, { Component } from "react";
 import { View, Text, CameraRoll, Image } from "react-native";
-import { FormLabel, FormInput, Button } from "react-native-elements";
+import {
+  FormLabel,
+  FormInput,
+  Button,
+  TouchableOpacity
+} from "react-native-elements";
 import axios from "axios";
 import { ImagePicker, Permissions } from "expo";
 import { Header } from "./common";
-//import ImagePicker from 'react-native-image-crop-picker'
+import Camera from "./Camera";
 
 class NewPostForm extends Component {
-  state = { title: "", image: "", desc: "", error: "", username: "" };
+  state = {
+    title: "",
+    image: "",
+    desc: "",
+    error: "",
+    username: "",
+    hasCameraPermission: null,
+    camera: true
+  };
+
+  useCamera = () => {
+    this.setState({
+      camera: !this.state.camera
+    });
+  };
 
   onSubmit = e => {
     const { title, image, desc, username } = this.state;
@@ -31,11 +50,12 @@ class NewPostForm extends Component {
     console.log("text feild", field);
     this.setState({ [field]: value });
   };
-  //
+
   openPicker = async () => {
     console.log("opening picker");
     const { status, ...data } = await Permissions.askAsync(
-      Permissions.CAMERA_ROLL
+      Permissions.CAMERA_ROLL,
+      Permissions.CAMERA
     );
     console.log("result", status, data);
     if (status === "granted") {
@@ -45,6 +65,7 @@ class NewPostForm extends Component {
         uri,
         ...data
       } = await ImagePicker.launchImageLibraryAsync();
+
       console.log("data", data);
       if (!cancelled) {
         this.setState({
@@ -58,6 +79,8 @@ class NewPostForm extends Component {
   };
 
   render() {
+    if (!this.state.camera) return <Camera />;
+
     return (
       <View>
         <View style={{ marginBottom: 10 }}>
@@ -79,9 +102,15 @@ class NewPostForm extends Component {
           <Button
             onPress={this.openPicker}
             buttonStyle={styles.buttonStyle2}
-            title="Upload image"
+            title="Upload image from Camera Roll"
+          />
+          <Button
+            onPress={this.props.openCamera}
+            buttonStyle={styles.buttonStyle2}
+            title="Take Pictue"
           />
         </View>
+
         <View style={{ marginBottom: 10 }}>
           <FormLabel>Describe The Trip!</FormLabel>
           <FormInput
@@ -89,6 +118,7 @@ class NewPostForm extends Component {
             onChangeText={desc => this.setState({ desc })}
           />
         </View>
+
         <Button
           buttonStyle={styles.buttonStyle}
           onPress={this.onSubmit}
