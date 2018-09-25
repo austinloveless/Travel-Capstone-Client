@@ -25,6 +25,7 @@ export default class Photo extends React.Component {
     this.setState({ selected: !this.state.selected }, () =>
       this.props.onSelectionToggle(this.props.uri, this.state.selected)
     );
+    console.log("photo shizz", this.props.uri);
   };
 
   detectFace = () =>
@@ -105,6 +106,7 @@ export default class Photo extends React.Component {
   };
 
   render() {
+    console.log("photo state", this.state.image);
     const { uri } = this.props;
     return (
       <TouchableOpacity

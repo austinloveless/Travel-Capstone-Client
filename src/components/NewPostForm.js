@@ -44,6 +44,7 @@ class NewPostForm extends Component {
       console.log("post error", err);
       this.setState({ error: err.message });
     });
+    this.props.toggleForm();
   };
   //
   onInputChange = (value, field) => {
@@ -79,8 +80,6 @@ class NewPostForm extends Component {
   };
 
   render() {
-    if (!this.state.camera) return <Camera />;
-
     return (
       <View>
         <View style={{ marginBottom: 10 }}>
@@ -107,7 +106,7 @@ class NewPostForm extends Component {
           <Button
             onPress={this.props.openCamera}
             buttonStyle={styles.buttonStyle2}
-            title="Take Pictue"
+            title="Take Picture"
           />
         </View>
 

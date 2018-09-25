@@ -7,6 +7,7 @@ import {
   Text,
   ScrollView
 } from "react-native";
+import { Button } from "react-native-elements";
 import { FileSystem, FaceDetector, MediaLibrary, Permissions } from "expo";
 import { MaterialIcons } from "@expo/vector-icons";
 import Photo from "./Photo";
@@ -33,6 +34,7 @@ export default class GalleryScreen extends React.Component {
     } else {
       selected = selected.filter(item => item !== uri);
     }
+    console.log("selected", selected[0]);
     this.setState({ selected });
   };
 
@@ -62,10 +64,12 @@ export default class GalleryScreen extends React.Component {
       key={fileName}
       uri={`${PHOTOS_DIR}/${fileName}`}
       onSelectionToggle={this.toggleSelection}
+      uploadImageAsync={this.uploadImageAsync}
     />
   );
 
   render() {
+    console.log("gallery state", this.props);
     return (
       <View style={styles.container}>
         <View style={styles.navbar}>
@@ -80,6 +84,7 @@ export default class GalleryScreen extends React.Component {
           <View style={styles.pictures}>
             {this.state.photos.map(this.renderPhoto)}
           </View>
+          <Button title="Upload Image" onPress={this.props.onComplete} />
         </ScrollView>
       </View>
     );

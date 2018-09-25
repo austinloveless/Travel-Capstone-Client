@@ -6,6 +6,7 @@ import PostDetail from "./PostDetail";
 import { Header } from "./common";
 import NewPostForm from "./NewPostForm";
 import { Icon } from "react-native-elements";
+import GalleryScreen from "./GalleryScreen";
 
 const APIURL = "https://infinite-mountain-39369.herokuapp.com/api/posts/";
 const USERAPI = "https://infinite-mountain-39369.herokuapp.com/api/users";
@@ -17,7 +18,8 @@ class Posts extends Component {
       posts: [],
       toggleForm: true,
       username: "",
-      hideComponent: true
+      hideComponent: true,
+      camera: true
     };
   }
 
@@ -140,6 +142,7 @@ class Posts extends Component {
               key={p._id}
               {...p}
               onDelete={this.deletePost.bind(this, p._id)}
+              openMap={this.props.openMap}
             />
           );
         })
@@ -157,6 +160,7 @@ class Posts extends Component {
           <NewPostForm
             openCamera={this.props.openCamera}
             savePost={this.savePost}
+            toggleForm={this.toggleForm}
           />
         ) : null}
 

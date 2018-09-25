@@ -200,7 +200,12 @@ export default class CameraScreen extends React.Component {
   };
 
   renderGallery() {
-    return <GalleryScreen onPress={this.toggleView.bind(this)} />;
+    return (
+      <GalleryScreen
+        onPress={this.toggleView.bind(this)}
+        navigate={this.props.onComplete}
+      />
+    );
   }
 
   renderFace({ bounds, faceID, rollAngle, yawAngle }) {
@@ -417,6 +422,7 @@ export default class CameraScreen extends React.Component {
   );
 
   render() {
+    console.log("camera state", this.state);
     const cameraScreenContent = this.state.permissionsGranted
       ? this.renderCamera()
       : this.renderNoPermissions();

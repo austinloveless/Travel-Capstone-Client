@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { Text, View, Image, Linking, AsyncStorage } from "react-native";
+import {
+  Text,
+  View,
+  Image,
+  Linking,
+  AsyncStorage,
+  TouchableOpacity
+} from "react-native";
 import { CommonButton, Card, CardSection } from "./common";
 import { Button } from "react-native-elements";
 import moment from "moment";
@@ -27,7 +34,8 @@ class PostDetail extends Component {
       imageStyle,
       timeText,
       descText,
-      profileImageStyle
+      profileImageStyle,
+      buttonStyle2
     } = styles;
 
     const user = this.state.userInfo
@@ -35,23 +43,27 @@ class PostDetail extends Component {
           return <UserInfo key={user._id} {...user} />;
         })
       : null;
-
+    console.log("post detail props", this.props);
     return (
       <Card style={{ paddingTop: 5 }}>
         <CardSection>
           <View>
-            <Image
-              style={profileImageStyle}
-              source={{
-                uri:
-                  "https://s3.us-east-2.amazonaws.com/capstone-travel-profile/files/IMG_1011.JPG"
-              }}
-            />
-            <Text style={headerTextStyle}>{this.props.title}</Text>
+            <TouchableOpacity onPress={this.props.openMap}>
+              <Image
+                style={profileImageStyle}
+                source={{
+                  uri:
+                    "https://s3.us-east-2.amazonaws.com/capstone-travel-profile/files/IMG_1011.JPG"
+                }}
+              />
+              <Text style={headerTextStyle}>{this.props.title}</Text>
+            </TouchableOpacity>
           </View>
-          <Button title="delete" onPress={this.props.onDelete} />
-          <Button title="edit" onPress={this.toggleForm} />
-          {!this.state.toggleForm ? <EditPost /> : null}
+          <Button
+            style={buttonStyle2}
+            title="Delete"
+            onPress={this.props.onDelete}
+          />
         </CardSection>
 
         <Image style={imageStyle} source={{ uri: this.props.image }} />
@@ -107,6 +119,10 @@ const styles = {
   },
   descText: {
     marginLeft: 20
+  },
+  buttonStyle2: {
+    backgroundColor: "red",
+    marginTop: 15
   }
 };
 

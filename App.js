@@ -43,12 +43,13 @@ export default class App extends React.Component {
         welcome: { screen: WelcomeScreen },
         auth: { screen: AuthScreen },
         code: { screen: CodeScreen },
-        camera: { screen: CameraScreen },
         main: {
           screen: createBottomTabNavigator(
             {
               map: { screen: MapScreen },
               posts: { screen: PostsScreen },
+              camera: { screen: CameraScreen },
+
               settings: {
                 screen: createStackNavigator({
                   settings: { screen: SettingScreen }
