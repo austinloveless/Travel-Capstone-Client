@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import { View, Text, ActivityIndicator } from "react-native";
 import { MapView } from "expo";
+import { Icon } from "react-native-elements";
 import reverseGeocode from "latlng-to-zip";
 import qs from "qs";
 import PostDetail from "../components/PostDetail";
+import { Header } from "../components/common";
 
 class MapScreen extends Component {
   state = {
@@ -38,6 +40,9 @@ class MapScreen extends Component {
     });
   };
 
+  onSignInComplete = () => {
+    this.props.navigation.navigate("posts");
+  };
   render() {
     if (!this.state.mapLoaded) {
       return (
@@ -49,6 +54,8 @@ class MapScreen extends Component {
 
     return (
       <View style={{ flex: 1 }}>
+        <Header headerText="Travelgram" />
+
         <MapView
           onRegionChangeComplete={this.onRegionChangeComplete}
           region={this.state.region}

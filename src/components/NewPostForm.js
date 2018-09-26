@@ -19,7 +19,8 @@ class NewPostForm extends Component {
     error: "",
     username: "",
     hasCameraPermission: null,
-    camera: true
+    camera: true,
+    zipcode: ""
   };
 
   useCamera = () => {
@@ -112,10 +113,11 @@ class NewPostForm extends Component {
 
         <View style={{ marginBottom: 10 }}>
           <FormLabel>Describe The Trip!</FormLabel>
-          <FormInput
-            value={this.state.desc}
-            onChangeText={desc => this.setState({ desc })}
-          />
+          <FormInput onChangeText={desc => this.setState({ desc })} />
+        </View>
+        <View style={{ marginBottom: 10 }}>
+          <FormLabel>Five Digit Zip Code</FormLabel>
+          <FormInput value={this.state.zipcode} />
         </View>
 
         <Button

@@ -5,7 +5,6 @@ import { Button } from "react-native-elements";
 import PostDetail from "./PostDetail";
 import { Header } from "./common";
 import NewPostForm from "./NewPostForm";
-import { Icon } from "react-native-elements";
 import GalleryScreen from "./GalleryScreen";
 
 const APIURL = "https://infinite-mountain-39369.herokuapp.com/api/posts/";
@@ -23,8 +22,8 @@ class Posts extends Component {
     };
   }
 
-  toggleForm = () => {
-    this.setState({
+  toggleForm = async () => {
+    await this.setState({
       toggleForm: !this.state.toggleForm
     });
   };

@@ -4,7 +4,7 @@ import SignInForm from "../components/SignInForm";
 
 class CodeScreen extends Component {
   onSignInComplete = () => {
-    this.props.navigation.navigate("posts");
+    this.props.navigation.navigate("userInfo");
   };
 
   render() {

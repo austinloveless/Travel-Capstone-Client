@@ -21,6 +21,7 @@ import MapScreen from "./src/screens/MapScreen";
 import PostsScreen from "./src/screens/PostsScreen";
 import CodeScreen from "./src/screens/CodeScreen";
 import CameraScreen from "./src/screens/CameraScreen";
+import UserNameScreen from "./src/screens/UserNameScreen";
 
 export default class App extends React.Component {
   state = { username: "" };
@@ -43,6 +44,7 @@ export default class App extends React.Component {
         welcome: { screen: WelcomeScreen },
         auth: { screen: AuthScreen },
         code: { screen: CodeScreen },
+        userInfo: { screen: UserNameScreen },
         main: {
           screen: createBottomTabNavigator(
             {
