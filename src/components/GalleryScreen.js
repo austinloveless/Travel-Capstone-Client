@@ -84,7 +84,11 @@ export default class GalleryScreen extends React.Component {
           <View style={styles.pictures}>
             {this.state.photos.map(this.renderPhoto)}
           </View>
-          <Button title="Upload Image" onPress={this.props.onComplete} />
+          <Button
+            buttonStyle={{ backgroundColor: "blue" }}
+            title="Upload Image"
+            onPress={this.props.onComplete}
+          />
         </ScrollView>
       </View>
     );

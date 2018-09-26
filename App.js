@@ -51,12 +51,7 @@ export default class App extends React.Component {
               map: { screen: MapScreen },
               posts: { screen: PostsScreen },
               camera: { screen: CameraScreen },
-
-              settings: {
-                screen: createStackNavigator({
-                  settings: { screen: SettingScreen }
-                })
-              }
+              settings: { screen: SettingScreen }
             },
             {
               tabBarPosition: "bottom",
@@ -66,13 +61,13 @@ export default class App extends React.Component {
             }
           )
         }
+      },
+      {
+        navigationOptions: {
+          tabBarVisible: false
+        },
+        lazyLoad: true
       }
-      // {
-      //   navigationOptions: {
-      //     tabBarVisible: false
-      //   },
-      //   lazyLoad: true
-      // }
     );
 
     return (

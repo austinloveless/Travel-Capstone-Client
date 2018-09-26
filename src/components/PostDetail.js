@@ -56,11 +56,11 @@ class PostDetail extends Component {
                     "https://s3.us-east-2.amazonaws.com/capstone-travel-profile/files/IMG_1011.JPG"
                 }}
               />
-              <Text style={headerTextStyle}>{this.props.title}</Text>
+              <Text style={headerTextStyle}>Austin</Text>
             </TouchableOpacity>
           </View>
           <Button
-            style={buttonStyle2}
+            buttonStyle={buttonStyle2}
             title="Delete"
             onPress={this.props.onDelete}
           />

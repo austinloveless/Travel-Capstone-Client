@@ -84,13 +84,6 @@ class NewPostForm extends Component {
     return (
       <View>
         <View style={{ marginBottom: 10 }}>
-          <FormLabel>Username</FormLabel>
-          <FormInput
-            value={this.state.title}
-            onChangeText={title => this.onInputChange(title, "title")}
-          />
-        </View>
-        <View style={{ marginBottom: 10 }}>
           <FormLabel>Travel Photo</FormLabel>
           {this.state.image && (
             <Image
@@ -131,7 +124,7 @@ class NewPostForm extends Component {
 }
 const styles = {
   buttonStyle: {
-    backgroundColor: "#0288D1",
+    backgroundColor: "blue",
     marginTop: 15
   },
   buttonStyle2: {

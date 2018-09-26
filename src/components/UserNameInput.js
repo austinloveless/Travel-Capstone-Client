@@ -27,6 +27,7 @@ class UserNameInput extends Component {
         <View style={{ marginBottom: 10 }}>
           <FormLabel>Create A Password</FormLabel>
           <FormInput
+            secureTextEntry={true}
             onChangeText={password => this.onInputChange(password, "password")}
           />
         </View>

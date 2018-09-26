@@ -16,6 +16,7 @@ class SignInForm extends Component {
         phone: this.state.phone,
         code: this.state.code
       });
+      this.setState({ phone: "1", code: "" });
       this.props.onComplete();
       this.setState({ token: data.token });
       AsyncStorage.setItem("JWT", data.token);

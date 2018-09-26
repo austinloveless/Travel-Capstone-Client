@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, AsyncStorage } from "react-native";
 import { Button } from "react-native-elements";
+import { Header } from "../components/common";
 
 class SettingsScreen extends Component {
   onLogout = async () => {
@@ -20,7 +21,13 @@ class SettingsScreen extends Component {
   render() {
     return (
       <View>
-        <Button title="Logout" onPress={this.onLogout} />
+        <Header headerText="Travelgram" />
+
+        <Button
+          buttonStyle={{ backgroundColor: "red" }}
+          title="Logout"
+          onPress={this.onLogout}
+        />
       </View>
     );
   }

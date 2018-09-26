@@ -15,6 +15,9 @@ class SignUpForm extends Component {
       await axios.post(`${ROOT_URL}/requestOneTimePassword`, {
         phone: this.state.phone
       });
+      this.setState({
+        phone: "1"
+      });
       this.props.onComplete();
     } catch (err) {
       this.setState({ error: err });
