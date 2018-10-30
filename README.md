@@ -12,6 +12,8 @@ Twillio
 
 Firebase - Authentication/Database 
 
+Google Cloud Functions - Serverless functions for Authentication Logic
+
 # Using the app
 
 1. Logging in with a phone number for one time password authentication. 
